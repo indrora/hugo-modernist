@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="{{ site.Language.LanguageCode }}" dir="{{ or site.Language.LanguageDirection `ltr` }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    
+    {{ partialCached "css.html" . }}
+
+        <script src="js/scale.fix.js"></script>
+
+
+    <title>{{ if .Page.IsHome }}{{ .Site.Title }}{{ else }}{{ printf "%s | %s" .Title site.Title }}{{ end }}</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      
+      <header>
+        <h1>{{ or .Site.Title `Untitled Site` }}</h1>
+        {{- with .Site.Params.description -}}
+          <p>{{ . }}</p>
+        {{- else -}}
+          {{- errorf "params.description unset!"}}
+        {{- end -}}
+        <ul>
+        {{ range .Site.Menus.main.ByWeight }}
+          <li><a href="{{ .URL }}">{{with .Pre}}{{.}}{{end}}<strong>{{.Title}}</strong></a></li>
+        {{end}}
+        </ul>
+      </header>
+      <section>
+      {{ block "main" . }}{{ end }}
+      </section>
+    </div>
+    <footer>
+      {{with .Site.Params.footer}}<p>{{ . | markdownify }}</p>{{end}}
+      <p>Powered by hugo &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a>, ported by <a href="https://github.com/indrora">indrora</a></p>
+    </footer>  
+  </body>
+</html>
