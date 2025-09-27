@@ -55,8 +55,8 @@ jobs:
         run: |
           hugo \
             --minify \
-            --baseURL "${{ steps.pages.outputs.base_url }}/"
-            --config ./example/hugo.toml
+            --baseURL "${{ steps.pages.outputs.base_url }}/" \
+            --config ./example/hugo.toml \
             --contentDir example/ccontent
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
